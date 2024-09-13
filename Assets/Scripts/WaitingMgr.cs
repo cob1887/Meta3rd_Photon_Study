@@ -59,8 +59,8 @@ public class WaitingMgr : MonoBehaviour
             max = PhotonNetwork.CurrentRoom.MaxPlayers;
             // idx 값을 내가 몇번째 들어왔는지
             idx = PhotonNetwork.CurrentRoom.PlayerCount - 1;
-
-           
+            // projectmgr에 나의 순서를 저장
+            ProjectMgr.Get().orderInRoom = idx;           
         }
 
         // 총길이 / 2

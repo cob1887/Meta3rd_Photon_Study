@@ -17,6 +17,8 @@ public class ConnectionMgr : MonoBehaviourPunCallbacks
     {
         // inputNickName 의 내용이 변경될 때 호출되는 함수 등록
         inputNickName.onValueChanged.AddListener(OnValueChanged);
+
+        ProjectMgr.Get();
     }
 
     void Update()

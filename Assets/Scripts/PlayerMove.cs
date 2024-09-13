@@ -45,6 +45,7 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
 
     void Start()
     {
+        // GameManager 에게 Photonview 
 
         if(photonView.IsMine)
         {

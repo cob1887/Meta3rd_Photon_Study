@@ -94,6 +94,7 @@ public class LobbyMgr : MonoBehaviourPunCallbacks
         RoomOptions option = new RoomOptions();
         // 최대 인원 설정
         option.MaxPlayers = int.Parse(inputMaxPlayer.text);
+        
         // 커스텀 정보 설정
         ExitGames.Client.Photon.Hashtable customInfo = new ExitGames.Client.Photon.Hashtable();
         // 방제목 만!!!
@@ -200,7 +201,10 @@ public class LobbyMgr : MonoBehaviourPunCallbacks
             {
                 // allRoomInfo 추가
                 // allRoomInfo.Add(roomList[i].Name, roomList[i]);
-                allRoomInfo[roomList[i].Name] = roomList[i];
+                if (roomList[i].RemovedFromList == false)
+                {
+                    allRoomInfo[roomList[i].Name] = roomList[i];
+                }
             }
         }
     }
