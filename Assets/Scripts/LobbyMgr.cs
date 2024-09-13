@@ -93,8 +93,7 @@ public class LobbyMgr : MonoBehaviourPunCallbacks
         // 방 옵션 설정
         RoomOptions option = new RoomOptions();
         // 최대 인원 설정
-        option.MaxPlayers = int.Parse(inputMaxPlayer.text);
-        
+        option.MaxPlayers = int.Parse(inputMaxPlayer.text);        
         // 커스텀 정보 설정
         ExitGames.Client.Photon.Hashtable customInfo = new ExitGames.Client.Photon.Hashtable();
         // 방제목 만!!!

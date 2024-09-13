@@ -52,6 +52,9 @@ MonoBehaviour:
   - ChangeColour
   - HeresWhy
   - RpcSetReady
+  - RpcChageTurn
+  - RpcChangeTurn
+  - RpcAddPlayer
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

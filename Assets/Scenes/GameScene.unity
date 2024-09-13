@@ -691,7 +691,6 @@ MonoBehaviour:
   spawnPos: []
   spawnCenter: {fileID: 1482747712}
   allPlayer: []
-  turnIdx: 0
 --- !u!114 &973898778
 MonoBehaviour:
   m_ObjectHideFlags: 0

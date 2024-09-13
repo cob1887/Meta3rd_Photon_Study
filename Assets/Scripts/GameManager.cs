@@ -12,7 +12,10 @@ public class GameManager : MonoBehaviourPunCallbacks
     public Transform spawnCenter;
 
     // 모든 Player 의 PhotonView 가지고 있는 변수
-    public List<PhotonView> allPlayer = new List<PhotonView>();
+    public PhotonView[] allPlayer;
+
+    // GameScene 으로 넘어온 player 의 갯수
+    int enterPlayerCnt;
 
     // 현재 총을 쏠 수 있는 Player Idx
     int turnIdx = -1;
@@ -27,6 +30,8 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     void Start()
     {
+
+
         SetSpawnPos();
 
         // RPC 보내는 빈도 설정
@@ -40,6 +45,9 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         // 플레이어를 생성 (현재 Room 에 접속 되어있는 친구들도 보이게)
         PhotonNetwork.Instantiate("Player", spawnPos[idx], Quaternion.identity);
+
+        // 모든 플레이어 담을 변수 공간 할당
+        allPlayer = new PhotonView[PhotonNetwork.CurrentRoom.MaxPlayers];
 
         // 더 이상 이방에 접속을 하지 못하게 하자
                
@@ -101,12 +109,14 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
     }
 
-    public void AddPlayer(PhotonView pv)
+    public void AddPlayer(PhotonView pv, int order)
     {
-        allPlayer.Add(pv);
+        enterPlayerCnt++;
+
+        allPlayer[order] = (pv);
 
         // 만약에 모든 player 가 다 들어왔다면 
-        if(allPlayer.Count == PhotonNetwork.CurrentRoom.MaxPlayers)
+        if(enterPlayerCnt == PhotonNetwork.CurrentRoom.MaxPlayers)
         {
             // 방장일때만
             if(PhotonNetwork.IsMasterClient)
@@ -119,20 +129,35 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
     }
 
-    // 방장아 턴 넘겨줘
+    // 방장에서 호출된다
     public void ChangeTurn()
     {
-       photonView.RPC(nameof(RpcChangeTurn), RpcTarget.MasterClient)
+        photonView.RPC(nameof(RpcChangeTurn), RpcTarget.MasterClient);
     }
 
     [PunRPC]
     void RpcChangeTurn()
     {
-        turnIdx++;
+        int num = 0;
+        print(num++); 
+
+
+        //1
+        //if(turnIdx >= allPlayer.Count)
+        //{
+        //    turnIdx = 0;
+        //}
+
+
+        //2
+        //turnIdx++;
+        //turnIdx = turnIdx % allPlayer.Count;
+
+        // turnindex 를 최대인원 값보다 작게 만들자.
+        turnIdx = ++turnIdx % allPlayer.Length;
         print("현재 턴 : " + turnIdx);
 
         PlayerFire pf = allPlayer[turnIdx].GetComponent<PlayerFire>();
-
         pf.ChangeTurn(true);
     }
 }
